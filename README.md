@@ -63,7 +63,7 @@ npm run build:local
 | --- | --- |
 | 系统标题 | `.env` 的 `VITE_APP_TITLE` |
 | 默认登录租户 | `.env` 的 `VITE_APP_DEFAULT_LOGIN_TENANT`（须与后端实际租户名一致） |
-| Logo | `src/assets/imgs/logo.png`、`public/logo.png` |
+| Logo | `src/assets/imgs/logo.png`、`public/logo.png`（矢量源文件：`design/logo/logo.svg`） |
 | favicon | `public/favicon.png` |
 | 默认主题色 | `src/store/modules/app.ts`，或运行后在「项目配置」中调整 |
 | 百度统计 | `.env` 的 `VITE_APP_BAIDU_CODE`，留空则不启用 |

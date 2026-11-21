@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0.05" y1="0" x2="0.95" y2="1">
+      <stop offset="0" stop-color="#5B5BF0"/>
+      <stop offset="0.55" stop-color="#6C6BF5"/>
+      <stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <linearGradient id="ink" gradientUnits="userSpaceOnUse" x1="134" y1="108" x2="378" y2="350">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#EDEDFF"/>
+    </linearGradient>
+    <linearGradient id="band" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="0.45" stop-color="#FFFFFF" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.32" cy="0.12" r="0.85">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.22"/>
+      <stop offset="0.6" stop-color="#FFFFFF" stop-opacity="0.03"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="tile">
+      <rect width="512" height="512" rx="116"/>
+    </clipPath>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#2B2270" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#bg)"/>
+  <g clip-path="url(#tile)" stroke="url(#band)" stroke-linecap="round" fill="none">
+    <path d="M-40 372 L372 -40" stroke-width="86" opacity="0.26"/>
+    <path d="M40 452 L452 40" stroke-width="58" opacity="0.18"/>
+    <path d="M140 512 L512 140" stroke-width="34" opacity="0.12"/>
+  </g>
+  <rect width="512" height="512" rx="116" fill="url(#glow)"/>
+  <path filter="url(#shadow)" fill="url(#ink)" fill-rule="evenodd" d="M256 108 L378 350 L334 350 L311 300 L201 300 L178 350 L134 350 Z M256 186 L292 268 L220 268 Z"/>
+</svg>
