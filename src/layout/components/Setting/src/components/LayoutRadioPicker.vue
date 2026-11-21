@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+﻿<script lang="ts" setup>
 import { useAppStore } from '@/store/modules/app'
 import { useDesign } from '@/hooks/web/useDesign'
 
@@ -14,11 +14,11 @@ const layout = computed(() => appStore.getLayout)
 </script>
 
 <template>
-  <div :class="prefixCls" class="flex flex-wrap space-x-14px">
+  <div :class="prefixCls" class="flex flex-wrap justify-center gap-10px">
     <div
       :class="[
         `${prefixCls}__classic`,
-        'relative w-56px h-48px cursor-pointer bg-gray-300',
+        'relative w-62px h-50px cursor-pointer',
         {
           'is-acitve': layout === 'classic'
         }
@@ -28,7 +28,7 @@ const layout = computed(() => appStore.getLayout)
     <div
       :class="[
         `${prefixCls}__top-left`,
-        'relative w-56px h-48px cursor-pointer bg-gray-300',
+        'relative w-62px h-50px cursor-pointer',
         {
           'is-acitve': layout === 'topLeft'
         }
@@ -38,7 +38,7 @@ const layout = computed(() => appStore.getLayout)
     <div
       :class="[
         `${prefixCls}__top`,
-        'relative w-56px h-48px cursor-pointer bg-gray-300',
+        'relative w-62px h-50px cursor-pointer',
         {
           'is-acitve': layout === 'top'
         }
@@ -48,14 +48,14 @@ const layout = computed(() => appStore.getLayout)
     <div
       :class="[
         `${prefixCls}__cut-menu`,
-        'relative w-56px h-48px cursor-pointer bg-gray-300',
+        'relative w-62px h-50px cursor-pointer',
         {
           'is-acitve': layout === 'cutMenu'
         }
       ]"
       @click="appStore.setLayout('cutMenu')"
     >
-      <div class="absolute left-[10%] top-0 h-full w-[33%] bg-gray-200"></div>
+      <div class="absolute left-[10%] top-0 h-full w-[33%] bg-[var(--el-fill-color)]"></div>
     </div>
   </div>
 </template>
@@ -64,10 +64,26 @@ const layout = computed(() => appStore.getLayout)
 $prefix-cls: #{$namespace}-layout-radio-picker;
 
 .#{$prefix-cls} {
-  &__classic {
-    border: 2px solid #e5e7eb;
-    border-radius: 4px;
+  &__classic,
+  &__top-left,
+  &__top,
+  &__cut-menu {
+    overflow: hidden;
+    background-color: var(--el-fill-color);
+    border: 1px solid var(--el-border-color);
+    border-radius: 9px;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
 
+    &:hover {
+      border-color: var(--el-color-primary-light-5);
+      transform: translateY(-1px);
+    }
+  }
+
+  &__classic {
     &::before {
       position: absolute;
       top: 0;
@@ -76,7 +92,6 @@ $prefix-cls: #{$namespace}-layout-radio-picker;
       width: 33%;
       height: 100%;
       background-color: #273352;
-      border-radius: 4px 0 0 4px;
       content: '';
     }
 
@@ -87,15 +102,11 @@ $prefix-cls: #{$namespace}-layout-radio-picker;
       width: 100%;
       height: 25%;
       background-color: #fff;
-      border-radius: 4px 4px 0;
       content: '';
     }
   }
 
   &__top-left {
-    border: 2px solid #e5e7eb;
-    border-radius: 4px;
-
     &::before {
       position: absolute;
       top: 0;
@@ -104,7 +115,6 @@ $prefix-cls: #{$namespace}-layout-radio-picker;
       width: 100%;
       height: 33%;
       background-color: #273352;
-      border-radius: 4px 4px 0 0;
       content: '';
     }
 
@@ -115,15 +125,11 @@ $prefix-cls: #{$namespace}-layout-radio-picker;
       width: 33%;
       height: 100%;
       background-color: #fff;
-      border-radius: 4px 0 0 4px;
       content: '';
     }
   }
 
   &__top {
-    border: 2px solid #e5e7eb;
-    border-radius: 4px;
-
     &::before {
       position: absolute;
       top: 0;
@@ -132,15 +138,11 @@ $prefix-cls: #{$namespace}-layout-radio-picker;
       width: 100%;
       height: 33%;
       background-color: #273352;
-      border-radius: 4px 4px 0 0;
       content: '';
     }
   }
 
   &__cut-menu {
-    border: 2px solid #e5e7eb;
-    border-radius: 4px;
-
     &::before {
       position: absolute;
       top: 0;
@@ -149,24 +151,13 @@ $prefix-cls: #{$namespace}-layout-radio-picker;
       width: 100%;
       height: 33%;
       background-color: #273352;
-      border-radius: 4px 4px 0 0;
-      content: '';
-    }
-
-    &::after {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 10%;
-      height: 100%;
-      background-color: #fff;
-      border-radius: 4px 0 0 4px;
       content: '';
     }
   }
 
   .is-acitve {
     border-color: var(--el-color-primary);
+    box-shadow: 0 0 0 2px rgba(var(--el-color-primary-rgb), 0.16);
   }
 }
 </style>

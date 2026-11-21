@@ -69,7 +69,7 @@ const tagsView = ref(appStore.getTagsView)
 
 const tagsViewChange = (show: boolean) => {
   // 切换标签栏显示时，同步切换标签栏的高度
-  setCssVar('--tags-view-height', show ? '35px' : '0px')
+  setCssVar('--tags-view-height', show ? '42px' : '0px')
   appStore.setTagsView(show)
 }
 
@@ -234,3 +234,32 @@ watch(
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+$prefix-cls: #{$namespace}-interface-display;
+
+.#{$prefix-cls} {
+  > div {
+    padding: 9px 0;
+    border-bottom: 1px dashed var(--el-border-color-lighter);
+
+    > span {
+      color: var(--el-text-color-regular);
+      transition: color 0.2s ease;
+    }
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    &:hover > span {
+      color: var(--el-color-primary);
+    }
+  }
+}
+</style>

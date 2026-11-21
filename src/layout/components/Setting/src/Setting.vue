@@ -202,63 +202,84 @@ const clear = () => {
 <template>
   <div
     :class="prefixCls"
-    class="fixed right-0 top-[45%] h-40px w-40px cursor-pointer bg-[var(--el-color-primary)] text-center leading-40px"
+    class="fixed right-0 top-[45%] z-[1200] cursor-pointer"
     @click="drawer = true"
   >
-    <Icon color="#fff" icon="ep:setting" />
+    <Icon :class="`${prefixCls}__icon`" :size="18" color="#fff" icon="ep:setting" />
   </div>
 
-  <ElDrawer v-model="drawer" :z-index="4000" direction="rtl" size="350px">
+  <ElDrawer
+    v-model="drawer"
+    class="setting-drawer"
+    :z-index="4000"
+    direction="rtl"
+    size="380px"
+  >
     <template #header>
-      <span class="text-16px font-700">{{ t('setting.projectSetting') }}</span>
+      <div class="flex items-center gap-10px">
+        <span class="setting-drawer__badge">
+          <Icon :size="15" color="#fff" icon="ep:setting" />
+        </span>
+        <span class="text-15px font-600">{{ t('setting.projectSetting') }}</span>
+      </div>
     </template>
 
-    <div class="text-center">
+    <div class="setting-drawer__content">
       <!-- 主题 -->
-      <ElDivider>{{ t('setting.theme') }}</ElDivider>
-      <ThemeSwitch />
+      <section class="setting-block">
+        <div class="setting-block__title">{{ t('setting.theme') }}</div>
+        <div class="setting-block__center">
+          <ThemeSwitch />
+        </div>
+      </section>
 
       <!-- 布局 -->
-      <ElDivider>{{ t('setting.layout') }}</ElDivider>
-      <LayoutRadioPicker />
+      <section class="setting-block">
+        <div class="setting-block__title">{{ t('setting.layout') }}</div>
+        <LayoutRadioPicker />
+      </section>
 
       <!-- 系统主题 -->
-      <ElDivider>{{ t('setting.systemTheme') }}</ElDivider>
-      <ColorRadioPicker
-        v-model="systemTheme"
-        :schema="[
-          '#409eff',
-          '#009688',
-          '#536dfe',
-          '#ff5c93',
-          '#ee4f12',
-          '#0096c7',
-          '#9c27b0',
-          '#ff9800'
-        ]"
-        @change="setSystemTheme"
-      />
+      <section class="setting-block">
+        <div class="setting-block__title">{{ t('setting.systemTheme') }}</div>
+        <ColorRadioPicker
+          v-model="systemTheme"
+          :schema="[
+            '#6366f1',
+            '#409eff',
+            '#009688',
+            '#536dfe',
+            '#ff5c93',
+            '#ee4f12',
+            '#0096c7',
+            '#9c27b0'
+          ]"
+          @change="setSystemTheme"
+        />
+      </section>
 
       <!-- 头部主题 -->
-      <ElDivider>{{ t('setting.headerTheme') }}</ElDivider>
-      <ColorRadioPicker
-        v-model="headerTheme"
-        :schema="[
-          '#fff',
-          '#151515',
-          '#5172dc',
-          '#e74c3c',
-          '#24292e',
-          '#394664',
-          '#009688',
-          '#383f45'
-        ]"
-        @change="setHeaderTheme"
-      />
+      <section class="setting-block">
+        <div class="setting-block__title">{{ t('setting.headerTheme') }}</div>
+        <ColorRadioPicker
+          v-model="headerTheme"
+          :schema="[
+            '#fff',
+            '#151515',
+            '#5172dc',
+            '#e74c3c',
+            '#24292e',
+            '#394664',
+            '#009688',
+            '#383f45'
+          ]"
+          @change="setHeaderTheme"
+        />
+      </section>
 
       <!-- 菜单主题 -->
-      <template v-if="layout !== 'top'">
-        <ElDivider>{{ t('setting.menuTheme') }}</ElDivider>
+      <section v-if="layout !== 'top'" class="setting-block">
+        <div class="setting-block__title">{{ t('setting.menuTheme') }}</div>
         <ColorRadioPicker
           v-model="menuTheme"
           :schema="[
@@ -273,22 +294,25 @@ const clear = () => {
           ]"
           @change="setMenuTheme"
         />
-      </template>
+      </section>
+
+      <!-- 界面显示 -->
+      <section class="setting-block">
+        <div class="setting-block__title">{{ t('setting.interfaceDisplay') }}</div>
+        <InterfaceDisplay />
+      </section>
     </div>
 
-    <!-- 界面显示 -->
-    <ElDivider>{{ t('setting.interfaceDisplay') }}</ElDivider>
-    <InterfaceDisplay />
-
-    <ElDivider />
-    <div>
-      <ElButton class="w-full" type="primary" @click="copyConfig">{{ t('setting.copy') }}</ElButton>
-    </div>
-    <div class="mt-5px">
-      <ElButton class="w-full" type="danger" @click="clear">
-        {{ t('setting.clearAndReset') }}
-      </ElButton>
-    </div>
+    <template #footer>
+      <div class="flex gap-10px">
+        <ElButton class="!m-0 flex-1" type="primary" @click="copyConfig">
+          {{ t('setting.copy') }}
+        </ElButton>
+        <ElButton class="!m-0 flex-1" type="danger" plain @click="clear">
+          {{ t('setting.clearAndReset') }}
+        </ElButton>
+      </div>
+    </template>
   </ElDrawer>
 </template>
 
@@ -296,7 +320,117 @@ const clear = () => {
 $prefix-cls: #{$namespace}-setting;
 
 .#{$prefix-cls} {
-  border-radius: 6px 0 0 6px;
-  z-index: 1200;/*修正没有z-index会被表格层覆盖,值不要超过4000*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 46px;
+  background: linear-gradient(
+    140deg,
+    var(--el-color-primary-light-3),
+    var(--el-color-primary) 45%,
+    var(--el-color-primary-dark-2)
+  );
+  border-radius: 13px 0 0 13px;
+  box-shadow: -4px 8px 22px rgba(var(--el-color-primary-rgb), 0.35);
+  transition:
+    width 0.25s ease,
+    box-shadow 0.25s ease;
+
+  &::before {
+    position: absolute;
+    inset: 1px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.25), transparent 60%);
+    border-radius: 12px 0 0 12px;
+    content: '';
+    pointer-events: none;
+  }
+
+  &:hover {
+    width: 46px;
+    box-shadow: -6px 10px 28px rgba(var(--el-color-primary-rgb), 0.45);
+  }
+
+  &__icon {
+    position: relative;
+    transition: transform 0.4s ease;
+  }
+
+  &:hover &__icon {
+    transform: rotate(90deg);
+  }
+}
+</style>
+
+<style lang="scss">
+.setting-drawer {
+  background-color: var(--app-card-bg-color);
+
+  .el-drawer__header {
+    padding: 18px 20px;
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--app-border-color-light);
+  }
+
+  .el-drawer__body {
+    padding: 16px 20px;
+    background-color: var(--app-card-bg-color);
+  }
+
+  .el-drawer__footer {
+    padding: 14px 20px;
+    border-top: 1px solid var(--app-border-color-light);
+  }
+
+  &__badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(140deg, var(--el-color-primary-light-3), var(--el-color-primary));
+    border-radius: 9px;
+    box-shadow: 0 4px 10px rgba(var(--el-color-primary-rgb), 0.3);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .setting-block {
+    padding: 14px 16px 16px;
+    background-color: var(--app-bg-color);
+    border: 1px solid var(--app-border-color-light);
+    border-radius: 12px;
+
+    &__title {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--app-text-primary);
+
+      &::before {
+        width: 3px;
+        height: 12px;
+        background: linear-gradient(
+          180deg,
+          var(--el-color-primary-light-3),
+          var(--el-color-primary)
+        );
+        border-radius: 2px;
+        content: '';
+      }
+    }
+
+    &__center {
+      display: flex;
+      justify-content: center;
+    }
+  }
 }
 </style>

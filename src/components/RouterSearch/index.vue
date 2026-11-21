@@ -17,8 +17,8 @@
       />
     </el-select>
   </ElDialog>
-  <div v-else class="custom-hover" @click.stop="showTopSearch = !showTopSearch">
-    <Icon icon="ep:search" />
+  <div v-else class="router-search" @click.stop="showTopSearch = !showTopSearch">
+    <Icon icon="ep:search" :size="18" class="router-search__icon" />
     <el-select
       @click.stop
       filterable
@@ -26,7 +26,7 @@
       remote
       placeholder="请输入菜单内容"
       :remote-method="remoteMethod"
-      class="overflow-hidden transition-all-600"
+      class="router-search__select overflow-hidden transition-all-600"
       :class="showTopSearch ? '!w-220px ml2' : '!w-0'"
       @change="handleChange"
     >
@@ -117,3 +117,29 @@ defineExpose({
   }
 })
 </script>
+
+<style lang="scss" scoped>
+.router-search {
+  display: flex;
+  align-items: center;
+
+  &__icon {
+    flex-shrink: 0;
+    color: var(--top-header-text-color);
+  }
+
+  &__select {
+    :deep(.el-select__wrapper) {
+      min-height: 28px;
+      padding: 0 8px;
+      background-color: transparent;
+      border-radius: 7px;
+      box-shadow: inset 0 0 0 1px var(--app-border-color);
+    }
+
+    :deep(.el-select__placeholder) {
+      font-size: 13px;
+    }
+  }
+}
+</style>

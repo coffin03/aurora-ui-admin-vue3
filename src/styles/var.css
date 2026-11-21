@@ -1,42 +1,71 @@
 :root {
+  /* ==================== 品牌与基础色 ==================== */
+  --app-brand-color: var(--el-color-primary);
+  --app-brand-color-dark: var(--el-color-primary-dark-2);
+  --app-brand-color-soft: var(--el-color-primary-light-9);
+  --app-bg-color: #f5f6fa;
+  --app-card-bg-color: #ffffff;
+  --app-border-color: #eceef4;
+  --app-border-color-light: #f2f4f8;
+  --app-text-primary: #1f2437;
+  --app-text-regular: #4b5563;
+  --app-text-secondary: #8a91a3;
+
+  /* ==================== 圆角 / 阴影 / 字体 ==================== */
+  --app-radius-sm: 8px;
+  --app-radius-md: 10px;
+  --app-radius-lg: 14px;
+  --app-radius-xl: 20px;
+  --app-shadow-xs: 0 1px 2px rgba(17, 24, 39, 0.04);
+  --app-shadow-sm: 0 2px 8px rgba(17, 24, 39, 0.05);
+  --app-shadow-md: 0 6px 20px rgba(17, 24, 39, 0.07);
+  --app-shadow-lg: 0 16px 40px rgba(17, 24, 39, 0.1);
+  --app-font-family:
+    'Inter', 'PingFang SC', 'HarmonyOS Sans SC', 'Microsoft YaHei', 'Helvetica Neue', Arial,
+    sans-serif;
+
+  /* ==================== 登录页 ==================== */
   --login-bg-color: #293146;
 
-  --left-menu-max-width: 200px;
+  /* ==================== 左侧菜单 ==================== */
+  --left-menu-max-width: 216px;
 
   --left-menu-min-width: 64px;
 
-  --left-menu-bg-color: #001529;
+  --left-menu-bg-color: #ffffff;
 
-  --left-menu-bg-light-color: #0f2438;
+  --left-menu-bg-light-color: #f8f9fc;
 
-  --left-menu-bg-active-color: var(--el-color-primary);
+  --left-menu-bg-active-color: var(--el-color-primary-light-9);
 
-  --left-menu-text-color: #bfcbd9;
+  --left-menu-bg-hover-color: #f4f5fa;
 
-  --left-menu-text-active-color: #fff;
+  --left-menu-text-color: #51566b;
 
-  --left-menu-collapse-bg-active-color: var(--el-color-primary);
+  --left-menu-text-active-color: var(--el-color-primary);
+
+  --left-menu-collapse-bg-active-color: var(--app-brand-color);
   /* left menu end */
 
   /* logo start */
-  --logo-height: 50px;
+  --logo-height: 56px;
 
-  --logo-title-text-color: #fff;
+  --logo-title-text-color: #1f2437;
   /* logo end */
 
   /* header start */
-  --top-header-bg-color: '#fff';
+  --top-header-bg-color: #ffffff;
 
-  --top-header-text-color: 'inherit';
+  --top-header-text-color: #4b5563;
 
-  --top-header-hover-color: #f6f6f6;
+  --top-header-hover-color: #f4f5fa;
 
   --top-tool-height: var(--logo-height);
 
-  --top-tool-p-x: 0;
+  --top-tool-p-x: 10px;
 
-  --tags-view-height: 35px;
-  /* header start */
+  --tags-view-height: 42px;
+  /* header end */
 
   /* tab menu start */
   --tab-menu-max-width: 80px;
@@ -48,19 +77,51 @@
 
   --app-content-padding: 20px;
 
-  --app-content-bg-color: #f5f7f9;
+  --app-content-bg-color: var(--app-bg-color);
 
   --app-footer-height: 50px;
 
   --transition-time-02: 0.2s;
 }
 
-.dark {
-  --app-content-bg-color: var(--el-bg-color);
+/* 暗黑模式下的布局壳配色 */
+html.dark {
+  --app-brand-color-soft: rgba(var(--el-color-primary-rgb), 0.18) !important;
+  --app-bg-color: #0f1420;
+  --app-card-bg-color: #171d2c;
+  --app-border-color: #262d3f;
+  --app-border-color-light: #222938;
+  --app-text-primary: #e5e7eb;
+  --app-text-regular: #c2c8d6;
+  --app-text-secondary: #8b93a7;
+
+  --left-menu-bg-color: #151b2b !important;
+
+  --left-menu-bg-light-color: #1b2233 !important;
+
+  --left-menu-bg-active-color: rgba(var(--el-color-primary-rgb), 0.18) !important;
+
+  --left-menu-bg-hover-color: rgba(255, 255, 255, 0.05) !important;
+
+  --left-menu-text-color: #9aa4bf !important;
+
+  --left-menu-text-active-color: var(--el-color-primary-light-7) !important;
+
+  --logo-title-text-color: #e5e7eb !important;
+
+  --top-header-bg-color: #171d2c !important;
+
+  --top-header-text-color: #c2c8d6 !important;
+
+  --top-header-hover-color: rgba(255, 255, 255, 0.06) !important;
+
+  --app-content-bg-color: #0f1420;
 }
 
 html,
 body {
+  font-family: var(--app-font-family);
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

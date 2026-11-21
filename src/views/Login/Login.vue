@@ -1,68 +1,103 @@
 <template>
-  <div
-    :class="prefixCls"
-    class="relative h-[100%] lt-md:px-10px lt-sm:px-10px lt-xl:px-10px lt-xl:px-10px"
-  >
-    <div class="relative mx-auto h-full flex">
+  <div :class="prefixCls" class="relative h-[100%] overflow-auto bg-[var(--app-bg-color)]">
+    <div class="mx-auto h-full flex">
+      <!-- 左侧品牌展示区 -->
       <div
-        :class="`${prefixCls}__left flex-1 bg-gray-500 bg-opacity-20 relative p-30px lt-xl:hidden overflow-x-hidden overflow-y-auto`"
+        :class="`${prefixCls}__left`"
+        class="relative flex-1 flex flex-col overflow-hidden p-56px lt-xl:hidden"
+        :style="leftStyle"
       >
-        <!-- 左上角的 logo + 系统标题 -->
-        <div class="relative flex items-center text-white">
-          <img alt="" class="mr-10px h-48px w-48px" src="@/assets/imgs/logo.png" />
-          <span class="text-20px font-bold">{{ underlineToHump(appStore.getTitle) }}</span>
+        <!-- Logo + 系统标题 -->
+        <div class="relative z-10 flex items-center text-white">
+          <img
+            alt=""
+            class="mr-12px h-44px w-44px rounded-[10px] bg-white/10 p-2px"
+            src="@/assets/imgs/logo.png"
+          />
+          <span class="text-20px font-bold tracking-wide">
+            {{ underlineToHump(appStore.getTitle) }}
+          </span>
         </div>
-        <!-- 左边的背景图 + 欢迎语 -->
-        <div class="h-[calc(100%-60px)] flex items-center justify-center">
-          <TransitionGroup
-            appear
-            enter-active-class="animate__animated animate__bounceInLeft"
-            tag="div"
-          >
-            <img key="1" alt="" class="w-350px" src="@/assets/svgs/login-box-bg.svg" />
-            <div key="2" class="text-3xl text-white">{{ t('login.welcome') }}</div>
-            <div key="3" class="mt-5 text-14px font-normal text-white">
-              {{ t('login.message') }}
-            </div>
-          </TransitionGroup>
-        </div>
-      </div>
-      <div
-        class="relative flex-1 p-30px dark:bg-[var(--login-bg-color)] lt-sm:p-10px overflow-x-hidden overflow-y-auto"
-      >
-        <!-- 右上角的主题、语言选择 -->
-        <div
-          class="flex items-center justify-between at-2xl:justify-end at-xl:justify-end"
-          style="color: var(--el-text-color-primary);"
-        >
-          <div class="flex items-center at-2xl:hidden at-xl:hidden">
-            <img alt="" class="mr-10px h-48px w-48px" src="@/assets/imgs/logo.png" />
-            <span class="text-20px font-bold" >{{ underlineToHump(appStore.getTitle) }}</span>
+
+        <!-- 欢迎语 -->
+        <div class="relative z-10 my-auto">
+          <h1 class="text-42px font-700 leading-tight text-white">
+            {{ t('login.welcome') }}
+          </h1>
+          <p class="mt-16px max-w-480px text-15px leading-7 text-white/75">
+            {{ t('login.message') }}
+          </p>
+          <div class="mt-40px flex flex-wrap items-center gap-12px">
+            <span
+              class="h-34px flex items-center rounded-full bg-white/12 px-16px text-13px text-white/85 backdrop-blur-[4px]"
+            >
+              开箱即用的企业级中后台
+            </span>
+            <span
+              class="h-34px flex items-center rounded-full bg-white/12 px-16px text-13px text-white/85 backdrop-blur-[4px]"
+            >
+              权限 · 数据可视化 · 多租户
+            </span>
           </div>
-          <div class="flex items-center justify-end space-x-10px h-48px">
+        </div>
+
+        <div class="relative z-10 text-12px text-white/50">
+          © {{ new Date().getFullYear() }} {{ underlineToHump(appStore.getTitle) }}
+        </div>
+
+        <!-- 背景装饰 -->
+        <div
+          class="absolute -right-70px -top-80px h-320px w-320px rounded-full bg-white/10 blur-2xl"
+        ></div>
+        <div
+          class="absolute -bottom-90px right-110px h-260px w-260px rounded-full bg-white/10 blur-2xl"
+        ></div>
+        <img
+          alt=""
+          class="absolute bottom-80px right-30px w-220px opacity-15"
+          src="@/assets/svgs/login-box-bg.svg"
+        />
+      </div>
+
+      <!-- 右侧表单区 -->
+      <div
+        class="relative w-full flex flex-col bg-[var(--app-card-bg-color)] p-32px lt-xl:px-20px lt-sm:px-16px xl:w-560px"
+      >
+        <!-- 主题、语言选择 -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center at-xl:hidden">
+            <img
+              alt=""
+              class="mr-10px h-40px w-40px rounded-[8px]"
+              src="@/assets/imgs/logo.png"
+            />
+            <span class="text-18px font-bold">{{ underlineToHump(appStore.getTitle) }}</span>
+          </div>
+          <div class="ml-auto flex items-center space-x-10px">
             <ThemeSwitch />
             <LocaleDropdown />
           </div>
         </div>
-        <!-- 右边的登录界面 -->
-        <Transition appear enter-active-class="animate__animated animate__bounceInRight">
-          <div
-            class="m-auto h-[calc(100%-60px)] w-[100%] flex items-center at-2xl:max-w-500px at-lg:max-w-500px at-md:max-w-500px at-xl:max-w-500px"
-          >
-            <!-- 账号登录 -->
-            <LoginForm class="m-auto h-auto p-20px lt-xl:(rounded-3xl light:bg-white)" />
-            <!-- 手机登录 -->
-            <MobileForm class="m-auto h-auto p-20px lt-xl:(rounded-3xl light:bg-white)" />
-            <!-- 二维码登录 -->
-            <QrCodeForm class="m-auto h-auto p-20px lt-xl:(rounded-3xl light:bg-white)" />
-            <!-- 注册 -->
-            <RegisterForm class="m-auto h-auto p-20px lt-xl:(rounded-3xl light:bg-white)" />
-            <!-- 三方登录 -->
-            <SSOLoginVue class="m-auto h-auto p-20px lt-xl:(rounded-3xl light:bg-white)" />
-            <!-- 忘记密码 -->
-            <ForgetPasswordForm class="m-auto h-auto p-20px lt-xl:(rounded-3xl light:bg-white)" />
-          </div>
-        </Transition>
+
+        <!-- 登录表单 -->
+        <div class="flex flex-1 items-center justify-center py-40px">
+          <Transition appear enter-active-class="animate__animated animate__fadeIn">
+            <div class="w-full max-w-420px">
+              <!-- 账号登录 -->
+              <LoginForm class="login-form" />
+              <!-- 手机登录 -->
+              <MobileForm class="login-form" />
+              <!-- 二维码登录 -->
+              <QrCodeForm class="login-form" />
+              <!-- 注册 -->
+              <RegisterForm class="login-form" />
+              <!-- 三方登录 -->
+              <SSOLoginVue class="login-form" />
+              <!-- 忘记密码 -->
+              <ForgetPasswordForm class="login-form" />
+            </div>
+          </Transition>
+        </div>
       </div>
     </div>
   </div>
@@ -72,10 +107,18 @@ import { underlineToHump } from '@/utils'
 
 import { useDesign } from '@/hooks/web/useDesign'
 import { useAppStore } from '@/store/modules/app'
+import { isHexColor, mixWithBlack, mixWithWhite } from '@/utils/color'
 import { ThemeSwitch } from '@/layout/components/ThemeSwitch'
 import { LocaleDropdown } from '@/layout/components/LocaleDropdown'
 
-import { LoginForm, MobileForm, QrCodeForm, RegisterForm, SSOLoginVue, ForgetPasswordForm } from './components'
+import {
+  LoginForm,
+  MobileForm,
+  QrCodeForm,
+  RegisterForm,
+  SSOLoginVue,
+  ForgetPasswordForm
+} from './components'
 
 defineOptions({ name: 'Login' })
 
@@ -83,25 +126,33 @@ const { t } = useI18n()
 const appStore = useAppStore()
 const { getPrefixCls } = useDesign()
 const prefixCls = getPrefixCls('login')
+
+// 左侧品牌区渐变跟随主题色
+const leftStyle = computed(() => {
+  const themeColor = appStore.getTheme.elColorPrimary
+  const color = isHexColor(themeColor) ? themeColor : '#6366f1'
+  return {
+    background: `linear-gradient(135deg, ${mixWithBlack(color, 16)} 0%, ${color} 48%, ${mixWithWhite(
+      color,
+      18
+    )} 100%)`
+  }
+})
 </script>
 
 <style lang="scss" scoped>
 $prefix-cls: #{$namespace}-login;
 
 .#{$prefix-cls} {
-  overflow: auto;
-
   &__left {
     &::before {
       position: absolute;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      width: 100%;
-      height: 100%;
-      background-image: url('@/assets/svgs/login-bg.svg');
-      background-position: center;
-      background-repeat: no-repeat;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(circle at 30% 30%, #000 0%, transparent 75%);
       content: '';
     }
   }
@@ -109,13 +160,47 @@ $prefix-cls: #{$namespace}-login;
 </style>
 
 <style lang="scss">
-.dark .login-form {
-  .el-divider__text {
-    background-color: var(--login-bg-color);
+.login-form {
+  .el-form-item {
+    margin-bottom: 20px;
   }
 
-  .el-card {
-    background-color: var(--login-bg-color);
+  .el-form-item__label {
+    padding-bottom: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--app-text-regular);
   }
+
+  .el-input__wrapper {
+    padding: 4px 12px;
+    background-color: var(--el-fill-color-light);
+    box-shadow: 0 0 0 1px transparent inset;
+  }
+
+  .el-input__wrapper:hover {
+    box-shadow: 0 0 0 1px var(--el-border-color) inset;
+  }
+
+  .el-input__wrapper.is-focus {
+    background-color: var(--app-card-bg-color);
+    box-shadow: 0 0 0 1px var(--el-color-primary) inset;
+  }
+
+  .el-button--large {
+    height: 44px;
+    font-size: 15px;
+    border-radius: 10px;
+  }
+
+  .el-divider__text {
+    font-size: 12px;
+    color: var(--app-text-secondary);
+    background-color: var(--app-card-bg-color);
+  }
+}
+
+.dark .login-form .el-divider__text {
+  background-color: var(--login-bg-color);
 }
 </style>

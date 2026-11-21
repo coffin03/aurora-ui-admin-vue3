@@ -72,17 +72,34 @@ export const lineOptions: EChartsOption = {
 }
 
 export const pieOptions: EChartsOption = {
+  color: ['#6366f1', '#8b5cf6', '#22d3ee', '#34d399', '#fbbf24'],
   title: {
     text: t('analysis.userAccessSource'),
-    left: 'center'
+    left: 'center',
+    top: 0,
+    textStyle: {
+      fontSize: 14,
+      fontWeight: 600
+    }
   },
   tooltip: {
     trigger: 'item',
-    formatter: '{a} <br/>{b} : {c} ({d}%)'
+    formatter: '{b} <br/>{c} ({d}%)',
+    borderWidth: 0,
+    padding: [8, 12]
   },
   legend: {
-    orient: 'vertical',
-    left: 'left',
+    type: 'scroll',
+    orient: 'horizontal',
+    bottom: 0,
+    left: 'center',
+    icon: 'circle',
+    itemWidth: 8,
+    itemHeight: 8,
+    itemGap: 14,
+    textStyle: {
+      fontSize: 12
+    },
     data: [
       t('analysis.directAccess'),
       t('analysis.mailMarketing'),
@@ -95,8 +112,24 @@ export const pieOptions: EChartsOption = {
     {
       name: t('analysis.userAccessSource'),
       type: 'pie',
-      radius: '55%',
-      center: ['50%', '60%'],
+      radius: ['42%', '64%'],
+      center: ['50%', '45%'],
+      avoidLabelOverlap: true,
+      itemStyle: {
+        borderColor: '#fff',
+        borderWidth: 2,
+        borderRadius: 6
+      },
+      label: {
+        show: false
+      },
+      emphasis: {
+        label: {
+          show: true,
+          fontSize: 13,
+          fontWeight: 600
+        }
+      },
       data: [
         { value: 335, name: t('analysis.directAccess') },
         { value: 310, name: t('analysis.mailMarketing') },
@@ -109,20 +142,30 @@ export const pieOptions: EChartsOption = {
 }
 
 export const barOptions: EChartsOption = {
+  color: ['#6366f1'],
   title: {
     text: t('analysis.weeklyUserActivity'),
-    left: 'center'
+    left: 'center',
+    top: 0,
+    textStyle: {
+      fontSize: 14,
+      fontWeight: 600
+    }
   },
   tooltip: {
     trigger: 'axis',
     axisPointer: {
       type: 'shadow'
-    }
+    },
+    borderWidth: 0,
+    padding: [8, 12]
   },
   grid: {
-    left: 50,
-    right: 20,
-    bottom: 20
+    left: 12,
+    right: 12,
+    bottom: 8,
+    top: 48,
+    containLabel: true
   },
   xAxis: {
     type: 'category',
@@ -136,17 +179,49 @@ export const barOptions: EChartsOption = {
       t('analysis.sunday')
     ],
     axisTick: {
-      alignWithLabel: true
+      show: false
+    },
+    axisLine: {
+      lineStyle: {
+        color: '#e5e7eb'
+      }
+    },
+    axisLabel: {
+      fontSize: 12
     }
   },
   yAxis: {
-    type: 'value'
+    type: 'value',
+    splitLine: {
+      lineStyle: {
+        type: 'dashed',
+        color: '#eef0f5'
+      }
+    },
+    axisLabel: {
+      fontSize: 12
+    }
   },
   series: [
     {
       name: t('analysis.activeQuantity'),
       data: [13253, 34235, 26321, 12340, 24643, 1322, 1324],
-      type: 'bar'
+      type: 'bar',
+      barWidth: 18,
+      itemStyle: {
+        borderRadius: [6, 6, 0, 0],
+        color: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
+          colorStops: [
+            { offset: 0, color: '#818cf8' },
+            { offset: 1, color: '#6366f1' }
+          ]
+        }
+      }
     }
   ]
 }

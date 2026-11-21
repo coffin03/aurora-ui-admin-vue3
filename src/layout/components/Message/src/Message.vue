@@ -5,6 +5,13 @@ import { useUserStoreWithOut } from '@/store/modules/user'
 
 defineOptions({ name: 'Message' })
 
+defineProps({
+  color: {
+    type: String,
+    default: ''
+  }
+})
+
 const { push } = useRouter()
 const userStore = useUserStoreWithOut()
 const activeName = ref('notice')
@@ -54,7 +61,7 @@ onMounted(() => {
     <ElPopover :width="400" placement="bottom" trigger="click">
       <template #reference>
         <ElBadge :is-dot="unreadCount > 0" class="item">
-          <Icon :size="18" class="cursor-pointer" icon="ep:bell" @click="getList" />
+          <Icon :size="18" :color="color" class="cursor-pointer" icon="ep:bell" @click="getList" />
         </ElBadge>
       </template>
       <ElTabs v-model="activeName">

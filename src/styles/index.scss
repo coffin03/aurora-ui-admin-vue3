@@ -3,6 +3,273 @@
 @use './theme.scss';
 @use 'element-plus/theme-chalk/dark/css-vars.css';
 
+/* ==================== Element Plus 主题变量 ==================== */
+:root {
+  --el-color-primary: #6366f1;
+  --el-color-primary-light-3: #9294f5;
+  --el-color-primary-light-5: #b1b3f8;
+  --el-color-primary-light-7: #d0d1fb;
+  --el-color-primary-light-8: #e0e0fc;
+  --el-color-primary-light-9: #eff0fe;
+  --el-color-primary-dark-2: #4f52c1;
+  --el-color-primary-rgb: 99, 102, 241;
+
+  --el-color-success: #10b981;
+  --el-color-warning: #f59e0b;
+  --el-color-danger: #ef4444;
+  --el-color-info: #64748b;
+
+  --el-text-color-primary: #1f2437;
+  --el-text-color-regular: #4b5563;
+  --el-text-color-secondary: #8a91a3;
+  --el-text-color-placeholder: #a9b0c0;
+  --el-border-color: #e6e8ef;
+  --el-border-color-light: #eceef4;
+  --el-border-color-lighter: #f1f3f8;
+  --el-fill-color-light: #f7f8fc;
+  --el-fill-color-blank: #ffffff;
+
+  --el-border-radius-base: 8px;
+  --el-border-radius-small: 6px;
+  --el-border-radius-round: 999px;
+
+  --el-font-family: var(--app-font-family);
+  --el-box-shadow-light: var(--app-shadow-sm);
+  --el-box-shadow: var(--app-shadow-md);
+  --el-box-shadow-dark: var(--app-shadow-lg);
+}
+
+/* ==================== 通用排版 ==================== */
+html,
+body {
+  color: var(--el-text-color-primary);
+  background-color: var(--app-bg-color);
+}
+
+/* ==================== 卡片 ==================== */
+.el-card {
+  overflow: hidden;
+  border: 1px solid var(--app-border-color);
+  border-radius: var(--app-radius-lg);
+  box-shadow: var(--app-shadow-xs) !important;
+  transition:
+    box-shadow var(--transition-time-02),
+    border-color var(--transition-time-02);
+}
+
+.el-card:hover {
+  border-color: #e2e5f0;
+}
+
+.el-card__header {
+  padding: 16px 20px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--app-border-color-light);
+}
+
+.el-card__body {
+  padding: 20px;
+}
+
+/* ==================== 按钮 ==================== */
+.el-button {
+  font-weight: 500;
+  border-radius: var(--app-radius-sm);
+}
+
+.el-button--primary {
+  box-shadow: 0 2px 6px rgba(var(--el-color-primary-rgb), 0.24);
+}
+
+.el-button--primary:hover {
+  box-shadow: 0 4px 12px rgba(var(--el-color-primary-rgb), 0.3);
+}
+
+.el-button.is-link,
+.el-button.is-text {
+  box-shadow: none;
+}
+
+/* ==================== 输入框 / 选择器 ==================== */
+.el-input__wrapper,
+.el-textarea__inner,
+.el-select__wrapper {
+  border-radius: var(--app-radius-sm);
+  box-shadow: 0 0 0 1px var(--el-border-color) inset;
+  transition: box-shadow var(--transition-time-02);
+}
+
+.el-input__wrapper:hover,
+.el-select__wrapper:hover,
+.el-textarea__inner:hover {
+  box-shadow: 0 0 0 1px #c9cbd9 inset;
+}
+
+.el-input__wrapper.is-focus,
+.el-select__wrapper.is-focused,
+.el-textarea__inner:focus {
+  box-shadow: 0 0 0 1px var(--el-color-primary) inset;
+}
+
+.el-input__wrapper,
+.el-select__wrapper {
+  padding: 1px 12px;
+}
+
+/* ==================== 表格 ==================== */
+.el-table {
+  font-size: 13px;
+  border-radius: var(--app-radius-md);
+}
+
+.el-table th.el-table__cell {
+  font-weight: 600;
+  color: var(--app-text-regular);
+  background-color: #f8f9fc;
+}
+
+.el-table th.el-table__cell:first-child {
+  border-top-left-radius: var(--app-radius-md);
+}
+
+.el-table th.el-table__cell:last-child {
+  border-top-right-radius: var(--app-radius-md);
+}
+
+.el-table td.el-table__cell {
+  padding: 10px 0;
+  border-bottom-color: var(--app-border-color-light);
+}
+
+.el-table__row:hover > td.el-table__cell {
+  background-color: var(--el-color-primary-light-9) !important;
+}
+
+.el-table__inner-wrapper::before {
+  display: none;
+}
+
+/* ==================== 分页 ==================== */
+.el-pagination {
+  justify-content: flex-end;
+  padding-top: 16px;
+}
+
+.el-pagination.is-background .el-pager li {
+  border-radius: var(--app-radius-sm);
+}
+
+/* ==================== 弹窗 / 抽屉 ==================== */
+.el-dialog {
+  overflow: hidden;
+  border-radius: var(--app-radius-lg);
+  box-shadow: var(--app-shadow-lg);
+}
+
+.el-dialog__header {
+  padding: 20px 24px 12px;
+  font-weight: 600;
+}
+
+.el-dialog__body {
+  padding: 8px 24px 20px;
+}
+
+.el-dialog__footer {
+  padding: 12px 24px 20px;
+}
+
+.el-drawer {
+  border-radius: var(--app-radius-lg) 0 0 var(--app-radius-lg);
+}
+
+.el-message-box {
+  border-radius: var(--app-radius-lg);
+}
+
+/* ==================== 标签 / 徽标 ==================== */
+.el-tag {
+  border-radius: 6px;
+}
+
+.el-tag--primary {
+  --el-tag-bg-color: var(--app-brand-color-soft);
+  --el-tag-border-color: var(--el-color-primary-light-8);
+  --el-tag-text-color: var(--app-brand-color-dark);
+}
+
+/* ==================== 下拉 / 浮层 ==================== */
+.el-dropdown__popper,
+.el-select__popper,
+.el-popper.is-light {
+  border-radius: var(--app-radius-md);
+  box-shadow: var(--app-shadow-md);
+}
+
+.el-dropdown-menu__item {
+  border-radius: 6px;
+}
+
+/* ==================== 表单 ==================== */
+.el-form-item__label {
+  font-weight: 500;
+  color: var(--app-text-regular);
+}
+
+/* ==================== 标签页 / 步骤条 ==================== */
+.el-tabs__item {
+  font-weight: 500;
+}
+
+/* ==================== 描述列表 ==================== */
+.el-descriptions__label {
+  color: var(--app-text-secondary);
+}
+
+/* ==================== 滚动条 ==================== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 116, 139, 0.28);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 116, 139, 0.45);
+  background-clip: content-box;
+}
+
+/* ==================== 暗黑模式补充 ==================== */
+html.dark {
+  .el-table th.el-table__cell {
+    color: #c2c8d6;
+    background-color: #1b2233;
+  }
+
+  .el-table__row:hover > td.el-table__cell {
+    background-color: rgba(var(--el-color-primary-rgb), 0.12) !important;
+  }
+
+  .el-card:hover {
+    border-color: #2c3448;
+  }
+
+  .el-button--primary {
+    box-shadow: none;
+  }
+
+  .el-tag--primary {
+    --el-tag-bg-color: rgba(var(--el-color-primary-rgb), 0.18);
+    --el-tag-border-color: rgba(var(--el-color-primary-rgb), 0.35);
+    --el-tag-text-color: var(--el-color-primary-light-7);
+  }
+}
+
 .reset-margin [class*='el-icon'] + span {
   margin-left: 2px !important;
 }

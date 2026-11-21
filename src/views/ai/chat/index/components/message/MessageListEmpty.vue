@@ -3,7 +3,7 @@
   <div class="chat-empty">
     <!-- title -->
     <div class="center-container">
-      <div class="title">芋道 AI</div>
+      <div class="title">AI 助手</div>
       <div class="role-list">
         <div
           class="role-item"

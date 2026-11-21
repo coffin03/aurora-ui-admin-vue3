@@ -1,0 +1,19 @@
+Aurora Admin
+============
+
+本仓库（Aurora Admin）是 yudao-ui-admin-vue3 的二次开发版本，
+上游项目地址：https://gitee.com/yudaocode/yudao-ui-admin-vue3
+
+上游代码版权归 Archer 所有，并依据 MIT 许可证授权。
+本仓库在上游代码基础上进行了整体 UI/布局重构与若干功能细节调整，
+修改部分的版权归 Aurora Admin contributors 所有。
+
+MIT 许可证全文见本目录下的 LICENSE 文件。任何复制、分发或再发布
+本项目的副本或重要部分时，必须保留 LICENSE 中的原始版权声明与
+许可声明。
+
+本项目为独立的衍生项目，与上游作者无隶属或合作关系，也不代表
+上游官方版本。"芋道"、"yudao" 等名称与标识属于其各自权利人所有，
+本项目未将其作为自身品牌使用。
+
+本软件按"现状"提供，不附带任何明示或暗示的担保。

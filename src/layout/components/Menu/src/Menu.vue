@@ -135,43 +135,68 @@ $prefix-cls: #{$namespace}-menu;
 
   :deep(.#{$elNamespace}-menu) {
     width: 100% !important;
+    padding: 10px 0;
     border-right: none;
+    background-color: transparent;
 
-    // 设置选中时子标题的颜色
-    .is-active {
-      & > .#{$elNamespace}-sub-menu__title {
-        color: var(--left-menu-text-active-color) !important;
-      }
+    .#{$elNamespace}-menu-item,
+    .#{$elNamespace}-sub-menu__title {
+      height: 44px;
+      margin: 2px 10px;
+      padding-right: 10px;
+      font-size: 14px;
+      line-height: 44px;
+      color: var(--left-menu-text-color);
+      border-radius: var(--app-radius-sm);
+      transition:
+        background-color var(--transition-time-02),
+        color var(--transition-time-02);
     }
 
-    // 设置子菜单悬停的高亮和背景色
+    // 鼠标悬停
     .#{$elNamespace}-sub-menu__title,
     .#{$elNamespace}-menu-item {
       &:hover {
-        color: var(--left-menu-text-active-color) !important;
-        background-color: var(--left-menu-bg-color) !important;
+        color: var(--el-text-color-primary) !important;
+        background-color: var(--left-menu-bg-hover-color) !important;
       }
     }
 
-    // 设置选中时的高亮背景和高亮颜色
+    // 选中项
     .#{$elNamespace}-menu-item.is-active {
+      position: relative;
+      font-weight: 600;
       color: var(--left-menu-text-active-color) !important;
       background-color: var(--left-menu-bg-active-color) !important;
+
+      &::before {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 3px;
+        height: 18px;
+        background-color: var(--el-color-primary);
+        border-radius: 0 3px 3px 0;
+        content: '';
+        transform: translateY(-50%);
+      }
 
       &:hover {
         background-color: var(--left-menu-bg-active-color) !important;
       }
     }
 
-    .#{$elNamespace}-menu-item.is-active {
-      position: relative;
+    // 展开状态下的父级菜单
+    .#{$elNamespace}-sub-menu.is-active > .#{$elNamespace}-sub-menu__title {
+      font-weight: 600;
+      color: var(--left-menu-text-active-color) !important;
     }
 
-    // 设置子菜单的背景颜色
+    // 子菜单背景保持通透
     .#{$elNamespace}-menu {
       .#{$elNamespace}-sub-menu__title,
       .#{$elNamespace}-menu-item:not(.is-active) {
-        background-color: var(--left-menu-bg-light-color) !important;
+        background-color: transparent !important;
       }
     }
   }
@@ -180,10 +205,28 @@ $prefix-cls: #{$namespace}-menu;
   :deep(.#{$elNamespace}-menu--collapse) {
     width: var(--left-menu-min-width);
 
+    > .#{$elNamespace}-menu-item,
+    > .#{$elNamespace}-sub-menu > .#{$elNamespace}-sub-menu__title {
+      display: flex;
+      width: auto;
+      margin: 2px 8px;
+      padding: 0 !important;
+      justify-content: center;
+    }
+
+    .#{$elNamespace}-sub-menu__icon-arrow {
+      display: none;
+    }
+
     & > .is-active,
     & > .is-active > .#{$elNamespace}-sub-menu__title {
       position: relative;
       background-color: var(--left-menu-collapse-bg-active-color) !important;
+      color: #fff !important;
+
+      &::before {
+        display: none;
+      }
     }
   }
 
@@ -254,14 +297,15 @@ $prefix-cls: #{$namespace}-menu-popper;
   .el-sub-menu__title,
   .el-menu-item {
     &:hover {
-      color: var(--left-menu-text-active-color) !important;
-      background-color: var(--left-menu-bg-color) !important;
+      color: var(--el-text-color-primary) !important;
+      background-color: var(--left-menu-bg-hover-color) !important;
     }
   }
 
   // 设置选中时的高亮背景
   .el-menu-item.is-active {
     position: relative;
+    color: var(--left-menu-text-active-color) !important;
     background-color: var(--left-menu-bg-active-color) !important;
 
     &:hover {

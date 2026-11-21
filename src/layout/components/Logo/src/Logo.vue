@@ -62,18 +62,19 @@ watch(
       :class="[
         prefixCls,
         layout !== 'classic' ? `${prefixCls}__Top` : '',
-        'flex !h-[var(--logo-height)] items-center cursor-pointer pl-8px relative decoration-none overflow-hidden'
+        'flex !h-[var(--logo-height)] items-center cursor-pointer relative decoration-none overflow-hidden',
+        collapse && layout === 'classic' ? '!justify-center !pl-0' : 'pl-16px',
+        {
+          'border-b border-[var(--app-border-color-light)]': layout === 'classic'
+        }
       ]"
       to="/"
     >
-      <img
-        class="h-[calc(var(--logo-height)-10px)] w-[calc(var(--logo-height)-10px)]"
-        src="@/assets/imgs/logo.png"
-      />
+      <img class="h-34px w-34px rounded-[8px]" src="@/assets/imgs/logo.png" />
       <div
         v-if="show"
         :class="[
-          'ml-10px text-16px font-700',
+          'ml-10px text-[17px] font-700 tracking-wide whitespace-nowrap',
           {
             'text-[var(--logo-title-text-color)]': layout === 'classic',
             'text-[var(--top-header-text-color)]':

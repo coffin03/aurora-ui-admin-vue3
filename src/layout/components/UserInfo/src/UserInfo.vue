@@ -55,12 +55,11 @@ const toDocument = () => {
 </script>
 
 <template>
-  <ElDropdown class="custom-hover" :class="prefixCls" trigger="click">
-    <div class="flex items-center">
-      <ElAvatar :src="avatar" alt="" class="w-[calc(var(--logo-height)-25px)] rounded-[50%]" />
-      <span class="pl-[5px] text-14px text-[var(--top-header-text-color)] <lg:hidden">
-        {{ userName }}
-      </span>
+  <ElDropdown :class="prefixCls" trigger="click">
+    <div :class="`${prefixCls}__trigger`">
+      <ElAvatar :src="avatar" alt="" :size="28" :class="`${prefixCls}__avatar`" />
+      <span :class="`${prefixCls}__name`" class="<lg:hidden">{{ userName }}</span>
+      <Icon icon="ep:arrow-down" :size="12" :class="`${prefixCls}__arrow`" />
     </div>
     <template #dropdown>
       <ElDropdownMenu>
@@ -94,6 +93,43 @@ const toDocument = () => {
 </template>
 
 <style scoped lang="scss">
+$prefix-cls: #{$namespace}-user-info;
+
+.#{$prefix-cls} {
+  &__trigger {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    box-sizing: border-box;
+    height: 34px;
+    padding: 0 8px 0 3px;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: 9px;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: var(--top-header-hover-color);
+    }
+  }
+
+  &__avatar {
+    box-shadow: 0 0 0 1px var(--app-border-color);
+  }
+
+  &__name {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--top-header-text-color);
+    white-space: nowrap;
+  }
+
+  &__arrow {
+    color: var(--app-text-secondary);
+  }
+}
+
 .fade-bottom-enter-active,
 .fade-bottom-leave-active {
   transition:

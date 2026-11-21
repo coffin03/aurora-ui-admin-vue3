@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { store } from '../index'
 import { humpToUnderline, setCssVar } from '@/utils'
+import { hexToRGB, isHexColor, mixWithBlack, mixWithWhite } from '@/utils/color'
 import { ElMessage } from 'element-plus'
 import { CACHE_KEY, useCache } from '@/hooks/web/useCache'
 import { ElementPlusSize } from '@/types/elementPlus'
@@ -72,33 +73,33 @@ export const useAppStore = defineStore('app', {
       currentSize: wsCache.get('default') || 'default', // 组件尺寸
       theme: wsCache.get(CACHE_KEY.THEME) || {
         // 主题色
-        elColorPrimary: '#409eff',
+        elColorPrimary: '#6366f1',
         // 左侧菜单边框颜色
-        leftMenuBorderColor: 'inherit',
+        leftMenuBorderColor: '#eceef4',
         // 左侧菜单背景颜色
-        leftMenuBgColor: '#001529',
+        leftMenuBgColor: '#ffffff',
         // 左侧菜单浅色背景颜色
-        leftMenuBgLightColor: '#0f2438',
+        leftMenuBgLightColor: '#f8f9fc',
         // 左侧菜单选中背景颜色
-        leftMenuBgActiveColor: 'var(--el-color-primary)',
+        leftMenuBgActiveColor: 'var(--el-color-primary-light-9)',
         // 左侧菜单收起选中背景颜色
         leftMenuCollapseBgActiveColor: 'var(--el-color-primary)',
         // 左侧菜单字体颜色
-        leftMenuTextColor: '#bfcbd9',
+        leftMenuTextColor: '#51566b',
         // 左侧菜单选中字体颜色
-        leftMenuTextActiveColor: '#fff',
+        leftMenuTextActiveColor: 'var(--el-color-primary)',
         // logo字体颜色
-        logoTitleTextColor: '#fff',
+        logoTitleTextColor: '#1f2437',
         // logo边框颜色
         logoBorderColor: 'inherit',
         // 头部背景颜色
-        topHeaderBgColor: '#fff',
+        topHeaderBgColor: '#ffffff',
         // 头部字体颜色
-        topHeaderTextColor: 'inherit',
+        topHeaderTextColor: '#4b5563',
         // 头部悬停颜色
-        topHeaderHoverColor: '#f6f6f6',
+        topHeaderHoverColor: '#f4f5fa',
         // 头部边框颜色
-        topToolBorderColor: '#eee'
+        topToolBorderColor: '#eceef4'
       }
     }
   },
@@ -271,6 +272,16 @@ export const useAppStore = defineStore('app', {
     setCssVarTheme() {
       for (const key in this.theme) {
         setCssVar(`--${humpToUnderline(key)}`, this.theme[key])
+      }
+      // 同步 Element Plus 主色的衍生色阶，保证切换主题色后按钮、悬浮态等配色依然协调
+      const primaryColor = this.theme.elColorPrimary
+      if (primaryColor && isHexColor(primaryColor)) {
+        setCssVar('--el-color-primary', primaryColor)
+        setCssVar('--el-color-primary-rgb', hexToRGB(primaryColor).replace(/[^\d,]/g, ''))
+        ;[3, 5, 7, 8, 9].forEach((level) => {
+          setCssVar(`--el-color-primary-light-${level}`, mixWithWhite(primaryColor, level * 10))
+        })
+        setCssVar('--el-color-primary-dark-2', mixWithBlack(primaryColor, 20))
       }
     },
     setFooter(footer: boolean) {

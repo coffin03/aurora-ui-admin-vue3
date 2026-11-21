@@ -11,15 +11,16 @@ const prefixCls = getPrefixCls('content-wrap')
 defineProps({
   title: propTypes.string.def(''),
   message: propTypes.string.def(''),
-  bodyStyle: propTypes.object.def({ padding: '10px' })
+  bodyStyle: propTypes.object.def({ padding: '20px' })
 })
 </script>
 
 <template>
-  <ElCard :body-style="bodyStyle" :class="[prefixCls, 'mb-15px']" shadow="never">
+  <ElCard :body-style="bodyStyle" :class="[prefixCls, 'mb-16px']" shadow="never">
     <template v-if="title" #header>
       <div class="flex items-center">
-        <span class="text-16px font-700">{{ title }}</span>
+        <span class="mr-8px h-16px w-3px rounded-full bg-[var(--el-color-primary)]"></span>
+        <span class="text-15px font-600">{{ title }}</span>
         <ElTooltip v-if="message" effect="dark" placement="right">
           <template #content>
             <div class="max-w-200px">{{ message }}</div>

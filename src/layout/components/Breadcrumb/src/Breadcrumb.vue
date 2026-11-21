@@ -1,5 +1,6 @@
 <script lang="tsx">
 import { ElBreadcrumb, ElBreadcrumbItem } from 'element-plus'
+import { ArrowRight } from '@element-plus/icons-vue'
 import { ref, watch, computed, unref, defineComponent, TransitionGroup } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePermissionStore } from '@/store/modules/permission'
@@ -78,7 +79,11 @@ export default defineComponent({
     )
 
     return () => (
-      <ElBreadcrumb separator="/" class={`${prefixCls} flex items-center h-full ml-[10px]`}>
+      <ElBreadcrumb
+        separator="/"
+        separator-icon={ArrowRight}
+        class={`${prefixCls} flex items-center h-full ml-[6px]`}
+      >
         <TransitionGroup appear enter-active-class="animate__animated animate__fadeInRight">
           {renderBreadcrumb()}
         </TransitionGroup>
@@ -92,25 +97,32 @@ export default defineComponent({
 $prefix-cls: #{$elNamespace}-breadcrumb;
 
 .#{$prefix-cls} {
+  font-size: 13px;
+
+  :deep(.#{$prefix-cls}__separator) {
+    display: flex;
+    align-items: center;
+    margin: 0 8px;
+    font-size: 12px;
+    color: var(--top-header-text-color);
+    opacity: 0.35;
+  }
+
   :deep(.#{$prefix-cls}__item) {
     display: flex;
+
     .#{$prefix-cls}__inner {
       display: flex;
       align-items: center;
       color: var(--top-header-text-color);
+      opacity: 0.72;
+      transition:
+        color 0.2s ease,
+        opacity 0.2s ease;
 
       &:hover {
         color: var(--el-color-primary);
-      }
-    }
-  }
-
-  :deep(.#{$prefix-cls}__item):not(:last-child) {
-    .#{$prefix-cls}__inner {
-      color: var(--top-header-text-color);
-
-      &:hover {
-        color: var(--el-color-primary);
+        opacity: 1;
       }
     }
   }
@@ -119,10 +131,13 @@ $prefix-cls: #{$elNamespace}-breadcrumb;
     .#{$prefix-cls}__inner {
       display: flex;
       align-items: center;
-      color: var(--el-text-color-placeholder);
+      font-weight: 600;
+      color: var(--top-header-text-color);
+      cursor: default;
+      opacity: 1;
 
       &:hover {
-        color: var(--el-text-color-placeholder);
+        color: var(--top-header-text-color);
       }
     }
   }

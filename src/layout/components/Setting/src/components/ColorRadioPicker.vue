@@ -40,18 +40,22 @@ watch(
 </script>
 
 <template>
-  <div :class="prefixCls" class="flex flex-wrap space-x-14px">
+  <div :class="prefixCls" class="flex flex-wrap gap-10px">
     <span
       v-for="(item, i) in schema"
       :key="`radio-${i}`"
-      :class="{ 'is-active': colorVal === item }"
+      :class="[`${prefixCls}__item`, { 'is-active': colorVal === item }]"
       :style="{
         background: item
       }"
-      class="mb-5px h-20px w-20px cursor-pointer border-2px border-gray-300 rounded-2px border-solid text-center leading-20px"
       @click="colorVal = item"
     >
-      <Icon v-if="colorVal === item" :size="16" color="#fff" icon="ep:check" />
+      <Icon
+        v-if="colorVal === item"
+        :size="13"
+        :color="item === '#fff' ? 'var(--el-color-primary)' : '#fff'"
+        icon="ep:check"
+      />
     </span>
   </div>
 </template>
@@ -60,8 +64,29 @@ watch(
 $prefix-cls: #{$namespace}-color-radio-picker;
 
 .#{$prefix-cls} {
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:hover {
+      transform: scale(1.08);
+    }
+  }
+
   .is-active {
-    border-color: var(--el-color-primary);
+    box-shadow:
+      0 0 0 2px var(--app-bg-color),
+      0 0 0 4px var(--el-color-primary),
+      inset 0 0 0 1px rgba(0, 0, 0, 0.08);
   }
 }
 </style>

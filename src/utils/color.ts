@@ -90,6 +90,35 @@ export const lighten = (color: string, amount: number) => {
   )}${addLight(color.substring(4, 6), amount)}`
 }
 
+/**
+ * 将颜色与目标色按比例混合
+ * @param color 十六进制颜色
+ * @param target 目标色 RGB 数组
+ * @param weight 目标色占比（0 - 100）
+ */
+const mixColor = (color: string, target: number[], weight: number) => {
+  if (!isHexColor(color)) return color
+  const [r, g, b] = hexToRGB(color)
+    .replace(/(?:\(|\)|rgb|RGB)*/g, '')
+    .split(',')
+    .map((item) => Number(item))
+  const percent = Math.min(100, Math.max(0, weight)) / 100
+  const mix = (value: number, targetValue: number) =>
+    Math.round(value * (1 - percent) + targetValue * percent)
+  return rgbToHex(mix(r, target[0]), mix(g, target[1]), mix(b, target[2]))
+}
+
+/**
+ * 将颜色按比例与白色混合，weight 为白色的占比
+ */
+export const mixWithWhite = (color: string, weight: number) =>
+  mixColor(color, [255, 255, 255], weight)
+
+/**
+ * 将颜色按比例与黑色混合，weight 为黑色的占比
+ */
+export const mixWithBlack = (color: string, weight: number) => mixColor(color, [0, 0, 0], weight)
+
 /* Suma el porcentaje indicado a un color (RR, GG o BB) hexadecimal para aclararlo */
 /**
  * Sums the passed percentage to the R, G or B of a HEX color

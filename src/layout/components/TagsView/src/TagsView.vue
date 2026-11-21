@@ -273,7 +273,7 @@ watch(
   <div
     :id="prefixCls"
     :class="prefixCls"
-    class="relative w-full flex bg-[#fff] dark:bg-[var(--el-bg-color)]"
+    class="relative w-full flex bg-[var(--app-card-bg-color)] dark:bg-[var(--el-bg-color)]"
   >
     <span
       :class="tagsViewImmerse ? '' : `${prefixCls}__tool ${prefixCls}__tool--first`"
@@ -526,15 +526,21 @@ $prefix-cls: #{$namespace}-tags-view;
 
   &__item {
     position: relative;
-    top: 3px;
-    height: calc(100% - 6px);
+    top: 50%;
+    height: calc(100% - 14px);
     padding-right: 15px;
-    margin-left: 4px;
+    margin-left: 6px;
     font-size: 12px;
+    color: var(--app-text-regular);
     cursor: pointer;
-    border: 1px solid #d9d9d9;
-    border-radius: 2px;
+    background-color: var(--el-fill-color-light);
+    border: 1px solid transparent;
+    border-radius: var(--app-radius-sm);
     box-sizing: border-box;
+    transform: translateY(-50%);
+    transition:
+      color var(--transition-time-02),
+      background-color var(--transition-time-02);
 
     &--close {
       position: absolute;
@@ -545,6 +551,8 @@ $prefix-cls: #{$namespace}-tags-view;
     }
 
     &:not(.#{$prefix-cls}__item--affix):hover {
+      color: var(--el-color-primary);
+
       .#{$prefix-cls}__item--close {
         display: block;
       }
@@ -558,17 +566,19 @@ $prefix-cls: #{$namespace}-tags-view;
   &__item:not(.is-active) {
     &:hover {
       color: var(--el-color-primary);
+      background-color: var(--app-brand-color-soft);
     }
   }
 
   &__item.is-active {
-    color: var(--el-color-white);
-    background-color: var(--el-color-primary);
-    border: 1px solid var(--el-color-primary);
+    font-weight: 600;
+    color: var(--el-color-primary);
+    background-color: var(--app-brand-color-soft);
+    border: 1px solid var(--el-color-primary-light-8);
 
     .#{$prefix-cls}__item--close {
       :deep(span) {
-        color: var(--el-color-white) !important;
+        color: var(--el-color-primary) !important;
       }
     }
   }
@@ -579,7 +589,7 @@ $prefix-cls: #{$namespace}-tags-view;
     padding-right: 35px;
     margin: 0 -10px;
     border: none !important;
-    -webkit-mask-box-image: url("data:image/svg+xml,%3Csvg width='68' height='34' viewBox='0 0 68 34' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='m27,0c-7.99582,0 -11.95105,0.00205 -12,12l0,6c0,8.284 -0.48549,16.49691 -8.76949,16.49691l54.37857,-0.11145c-8.284,0 -8.60908,-8.10146 -8.60908,-16.38546l0,-6c0.11145,-12.08445 -4.38441,-12 -12,-12l-13,0z' fill='%23409eff'/%3E%3C/svg%3E")
+    -webkit-mask-box-image: url("data:image/svg+xml,%3Csvg width='68' height='34' viewBox='0 0 68 34' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='m27,0c-7.99582,0 -11.95105,0.00205 -12,12l0,6c0,8.284 -0.48549,16.49691 -8.76949,16.49691l54.37857,-0.11145c-8.284,0 -8.60908,-8.10146 -8.60908,-16.38546l0,-6c0.11145,-12.08445 -4.38441,-12 -12,-12l-13,0z' fill='%236366f1'/%3E%3C/svg%3E")
       12 27 15;
 
     .#{$prefix-cls}__item--label {
@@ -620,23 +630,25 @@ $prefix-cls: #{$namespace}-tags-view;
     }
 
     &__item {
-      border: 1px solid var(--el-border-color);
+      color: var(--app-text-regular);
+      background-color: rgba(255, 255, 255, 0.06);
+      border: 1px solid transparent;
     }
 
     &__item:not(.is-active) {
       &:hover {
-        color: var(--el-color-primary);
+        color: var(--el-color-primary-light-3);
       }
     }
 
     &__item.is-active {
-      color: var(--el-color-white);
-      background-color: var(--el-color-primary);
-      border: 1px solid var(--el-color-primary);
+      color: var(--el-color-primary-light-7);
+      background-color: rgba(var(--el-color-primary-rgb), 0.18);
+      border: 1px solid rgba(var(--el-color-primary-rgb), 0.35);
 
       .#{$prefix-cls}__item--close {
         :deep(span) {
-          color: var(--el-color-white) !important;
+          color: var(--el-color-primary-light-7) !important;
         }
       }
     }

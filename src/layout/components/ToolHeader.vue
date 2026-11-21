@@ -49,34 +49,44 @@ export default defineComponent({
         id={`${variables.namespace}-tool-header`}
         class={[
           prefixCls,
-          'h-[var(--top-tool-height)] relative px-[var(--top-tool-p-x)] flex items-center justify-between',
-          'dark:bg-[var(--el-bg-color)]'
+          'h-[var(--top-tool-height)] relative px-[var(--top-tool-p-x)] flex items-center'
         ]}
       >
         {layout.value !== 'top' ? (
-          <div class="h-full flex items-center">
+          <div class="h-full flex items-center gap-1">
             {hamburger.value && layout.value !== 'cutMenu' ? (
-              <Collapse class="custom-hover" color="var(--top-header-text-color)"></Collapse>
+              <div class="header-action">
+                <Collapse color="var(--top-header-text-color)"></Collapse>
+              </div>
             ) : undefined}
             {breadcrumb.value ? <Breadcrumb class="lt-md:hidden"></Breadcrumb> : undefined}
           </div>
         ) : undefined}
-        <div class="h-full flex items-center">
+        <div class="h-full flex items-center gap-1 ml-auto">
           {screenfull.value ? (
-            <Screenfull class="custom-hover" color="var(--top-header-text-color)"></Screenfull>
+            <div class="header-action">
+              <Screenfull color="var(--top-header-text-color)"></Screenfull>
+            </div>
           ) : undefined}
-          {search.value ? <RouterSearch isModal={false} /> : undefined}
+          {search.value ? (
+            <div class="header-action header-action--search">
+              <RouterSearch isModal={false} />
+            </div>
+          ) : undefined}
           {size.value ? (
-            <SizeDropdown class="custom-hover" color="var(--top-header-text-color)"></SizeDropdown>
+            <div class="header-action">
+              <SizeDropdown color="var(--top-header-text-color)"></SizeDropdown>
+            </div>
           ) : undefined}
           {locale.value ? (
-            <LocaleDropdown
-              class="custom-hover"
-              color="var(--top-header-text-color)"
-            ></LocaleDropdown>
+            <div class="header-action">
+              <LocaleDropdown color="var(--top-header-text-color)"></LocaleDropdown>
+            </div>
           ) : undefined}
           {message.value ? (
-            <Message class="custom-hover" color="var(--top-header-text-color)"></Message>
+            <div class="header-action">
+              <Message color="var(--top-header-text-color)"></Message>
+            </div>
           ) : undefined}
           <UserInfo></UserInfo>
         </div>
@@ -86,10 +96,50 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 $prefix-cls: #{$namespace}-tool-header;
 
 .#{$prefix-cls} {
   transition: left var(--transition-time-02);
+
+  .header-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-width: 34px;
+    height: 34px;
+    padding: 0 7px;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: 9px;
+    transition: background-color 0.2s ease;
+
+    // 统一内部元素的垂直居中，避免图标按基线对齐而出现高低差
+    > * {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      line-height: 1;
+    }
+
+    .el-dropdown {
+      line-height: 1;
+    }
+
+    .el-badge {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    &:hover {
+      background-color: var(--top-header-hover-color);
+    }
+  }
+
+  .header-action--search {
+    padding: 0 2px;
+  }
 }
 </style>
