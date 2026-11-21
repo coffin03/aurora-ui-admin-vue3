@@ -277,7 +277,7 @@ watch(
   >
     <span
       :class="tagsViewImmerse ? '' : `${prefixCls}__tool ${prefixCls}__tool--first`"
-      class="h-[var(--tags-view-height)] w-[var(--tags-view-height)] flex cursor-pointer items-center justify-center"
+      class="h-[30px] w-[30px] flex flex-shrink-0 cursor-pointer items-center justify-center"
       @click="move(-200)"
     >
       <Icon
@@ -399,28 +399,29 @@ watch(
         </div>
       </ElScrollbar>
     </div>
-    <span
-      :class="tagsViewImmerse ? '' : `${prefixCls}__tool`"
-      class="h-[var(--tags-view-height)] w-[var(--tags-view-height)] flex cursor-pointer items-center justify-center"
-      @click="move(200)"
-    >
-      <Icon
-        :hover-color="isDark ? '#fff' : 'var(--el-color-black)'"
-        color="var(--el-text-color-placeholder)"
-        icon="ep:d-arrow-right"
-      />
-    </span>
-    <span
-      :class="tagsViewImmerse ? '' : `${prefixCls}__tool`"
-      class="h-[var(--tags-view-height)] w-[var(--tags-view-height)] flex cursor-pointer items-center justify-center"
-      @click="refreshSelectedTag(selectedTag)"
-    >
-      <Icon
-        :hover-color="isDark ? '#fff' : 'var(--el-color-black)'"
-        color="var(--el-text-color-placeholder)"
-        icon="ep:refresh-right"
-      />
-    </span>
+    <div :class="`${prefixCls}__dock`">
+      <span
+        :class="`${prefixCls}__dock-btn`"
+        class="h-[30px] w-[30px] flex cursor-pointer items-center justify-center"
+        @click="move(200)"
+      >
+        <Icon
+          :hover-color="isDark ? '#fff' : 'var(--el-color-black)'"
+          color="var(--el-text-color-placeholder)"
+          icon="ep:d-arrow-right"
+        />
+      </span>
+      <span
+        :class="`${prefixCls}__dock-btn`"
+        class="h-[30px] w-[30px] flex cursor-pointer items-center justify-center"
+        @click="refreshSelectedTag(selectedTag)"
+      >
+        <Icon
+          :hover-color="isDark ? '#fff' : 'var(--el-color-black)'"
+          color="var(--el-text-color-placeholder)"
+          icon="ep:refresh-right"
+        />
+      </span>
     <ContextMenu
       :schema="[
         {
@@ -476,8 +477,8 @@ watch(
       trigger="click"
     >
       <span
-        :class="tagsViewImmerse ? '' : `${prefixCls}__tool`"
-        class="block h-[var(--tags-view-height)] w-[var(--tags-view-height)] flex cursor-pointer items-center justify-center"
+        :class="`${prefixCls}__dock-btn`"
+        class="block h-[30px] w-[30px] flex cursor-pointer items-center justify-center"
       >
         <Icon
           :hover-color="isDark ? '#fff' : 'var(--el-color-black)'"
@@ -486,6 +487,7 @@ watch(
         />
       </span>
     </ContextMenu>
+    </div>
   </div>
 </template>
 
@@ -499,60 +501,75 @@ $prefix-cls: #{$namespace}-tags-view;
 
   &__tool {
     position: relative;
+    align-self: center;
+    margin-left: 8px;
+    border-radius: 10px;
+    transition: background-color var(--transition-time-02);
 
-    &::before {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border-left: 1px solid var(--el-border-color);
-      content: '';
+    &:hover {
+      background-color: var(--app-brand-color-soft);
     }
 
     &--first {
-      &::before {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border-right: 1px solid var(--el-border-color);
-        border-left: none;
-        content: '';
-      }
+      margin-right: 2px;
+    }
+  }
+
+  // 右侧悬浮控制坞
+  &__dock {
+    display: flex;
+    flex-shrink: 0;
+    gap: 2px;
+    align-items: center;
+    align-self: center;
+    padding: 3px;
+    margin: 0 10px 0 8px;
+    background-color: var(--app-bg-color);
+    border: 1px solid var(--app-border-color-light);
+    border-radius: 11px;
+  }
+
+  &__dock-btn {
+    border-radius: 8px;
+    transition:
+      background-color var(--transition-time-02),
+      box-shadow var(--transition-time-02);
+
+    &:hover {
+      background-color: var(--app-card-bg-color);
+      box-shadow: var(--app-shadow-xs);
     }
   }
 
   &__item {
     position: relative;
     top: 50%;
-    height: calc(100% - 14px);
-    padding-right: 15px;
+    height: 30px;
+    padding-right: 14px;
     margin-left: 6px;
-    font-size: 12px;
-    color: var(--app-text-regular);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--app-text-secondary);
     cursor: pointer;
-    background-color: var(--el-fill-color-light);
+    background-color: transparent;
     border: 1px solid transparent;
-    border-radius: var(--app-radius-sm);
+    border-radius: 999px;
     box-sizing: border-box;
     transform: translateY(-50%);
     transition:
       color var(--transition-time-02),
-      background-color var(--transition-time-02);
+      background-color var(--transition-time-02),
+      box-shadow var(--transition-time-02);
 
     &--close {
       position: absolute;
       top: 50%;
-      right: 5px;
+      right: 2px;
       display: none;
       transform: translate(0, -50%);
     }
 
     &:not(.#{$prefix-cls}__item--affix):hover {
-      color: var(--el-color-primary);
-
       .#{$prefix-cls}__item--close {
         display: block;
       }
@@ -572,13 +589,25 @@ $prefix-cls: #{$namespace}-tags-view;
 
   &__item.is-active {
     font-weight: 600;
-    color: var(--el-color-primary);
-    background-color: var(--app-brand-color-soft);
-    border: 1px solid var(--el-color-primary-light-8);
+    color: #fff;
+    background-color: transparent;
+    background-image: var(--app-brand-gradient);
+    border: 1px solid transparent;
+    box-shadow:
+      0 6px 16px -8px rgba(var(--el-color-primary-rgb), 0.85),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22);
 
     .#{$prefix-cls}__item--close {
+      display: block;
+
       :deep(span) {
-        color: var(--el-color-primary) !important;
+        color: rgba(255, 255, 255, 0.8) !important;
+      }
+
+      &:hover {
+        :deep(span) {
+          color: #fff !important;
+        }
       }
     }
   }
@@ -589,6 +618,7 @@ $prefix-cls: #{$namespace}-tags-view;
     padding-right: 35px;
     margin: 0 -10px;
     border: none !important;
+    border-radius: 0;
     -webkit-mask-box-image: url("data:image/svg+xml,%3Csvg width='68' height='34' viewBox='0 0 68 34' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='m27,0c-7.99582,0 -11.95105,0.00205 -12,12l0,6c0,8.284 -0.48549,16.49691 -8.76949,16.49691l54.37857,-0.11145c-8.284,0 -8.60908,-8.10146 -8.60908,-16.38546l0,-6c0.11145,-12.08445 -4.38441,-12 -12,-12l-13,0z' fill='%236366f1'/%3E%3C/svg%3E")
       12 27 15;
 
@@ -622,6 +652,10 @@ $prefix-cls: #{$namespace}-tags-view;
 .dark {
   .#{$prefix-cls} {
     &__tool {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.06);
+      }
+
       &--first {
         &::after {
           display: none;
@@ -629,26 +663,40 @@ $prefix-cls: #{$namespace}-tags-view;
       }
     }
 
+    &__dock {
+      background-color: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    &__dock-btn {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.08);
+        box-shadow: none;
+      }
+    }
+
     &__item {
       color: var(--app-text-regular);
-      background-color: rgba(255, 255, 255, 0.06);
+      background-color: transparent;
       border: 1px solid transparent;
     }
 
     &__item:not(.is-active) {
       &:hover {
         color: var(--el-color-primary-light-3);
+        background-color: rgba(255, 255, 255, 0.06);
       }
     }
 
     &__item.is-active {
-      color: var(--el-color-primary-light-7);
-      background-color: rgba(var(--el-color-primary-rgb), 0.18);
-      border: 1px solid rgba(var(--el-color-primary-rgb), 0.35);
+      color: #fff;
+      background-color: transparent;
+      background-image: var(--app-brand-gradient);
+      border: 1px solid transparent;
 
       .#{$prefix-cls}__item--close {
         :deep(span) {
-          color: var(--el-color-primary-light-7) !important;
+          color: rgba(255, 255, 255, 0.8) !important;
         }
       }
     }

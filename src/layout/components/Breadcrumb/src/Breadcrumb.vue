@@ -47,18 +47,28 @@ export default defineComponent({
 
     const renderBreadcrumb = () => {
       const breadcrumbList = treeToList<AppRouteRecordRaw[]>(unref(levelList))
-      return breadcrumbList.map((v) => {
+      return breadcrumbList.map((v, index) => {
         const disabled = !v.redirect || v.redirect === 'noredirect'
         const meta = v.meta as RouteMeta
+        const isLast = index === breadcrumbList.length - 1
+        const content =
+          meta?.icon && breadcrumbIcon.value ? (
+            <div class="flex items-center">
+              <Icon icon={meta.icon} class="mr-[2px]" svgClass="inline-block"></Icon>
+              {t(v?.meta?.title)}
+            </div>
+          ) : (
+            t(v?.meta?.title)
+          )
         return (
           <ElBreadcrumbItem to={{ path: disabled ? '' : v.path }} key={v.name}>
-            {meta?.icon && breadcrumbIcon.value ? (
-              <div class="flex items-center">
-                <Icon icon={meta.icon} class="mr-[2px]" svgClass="inline-block"></Icon>
-                {t(v?.meta?.title)}
-              </div>
+            {isLast ? (
+              <span class="bc-current">
+                <span class="bc-dot"></span>
+                {content}
+              </span>
             ) : (
-              t(v?.meta?.title)
+              content
             )}
           </ElBreadcrumbItem>
         )
@@ -102,10 +112,10 @@ $prefix-cls: #{$elNamespace}-breadcrumb;
   :deep(.#{$prefix-cls}__separator) {
     display: flex;
     align-items: center;
-    margin: 0 8px;
-    font-size: 12px;
+    margin: 0 6px;
+    font-size: 11px;
     color: var(--top-header-text-color);
-    opacity: 0.35;
+    opacity: 0.3;
   }
 
   :deep(.#{$prefix-cls}__item) {
@@ -139,6 +149,22 @@ $prefix-cls: #{$elNamespace}-breadcrumb;
       &:hover {
         color: var(--top-header-text-color);
       }
+    }
+  }
+
+  // 当前页标识：品牌渐变圆点
+  :deep(.bc-current) {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    .bc-dot {
+      flex-shrink: 0;
+      width: 6px;
+      height: 6px;
+      background-image: var(--app-brand-gradient);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(var(--el-color-primary-rgb), 0.12);
     }
   }
 }

@@ -57,7 +57,9 @@ const toDocument = () => {
 <template>
   <ElDropdown :class="prefixCls" trigger="click">
     <div :class="`${prefixCls}__trigger`">
-      <ElAvatar :src="avatar" alt="" :size="28" :class="`${prefixCls}__avatar`" />
+      <span :class="`${prefixCls}__avatar-ring`">
+        <ElAvatar :src="avatar" alt="" :size="26" />
+      </span>
       <span :class="`${prefixCls}__name`" class="<lg:hidden">{{ userName }}</span>
       <Icon icon="ep:arrow-down" :size="12" :class="`${prefixCls}__arrow`" />
     </div>
@@ -101,11 +103,11 @@ $prefix-cls: #{$namespace}-user-info;
     gap: 8px;
     align-items: center;
     box-sizing: border-box;
-    height: 34px;
-    padding: 0 8px 0 3px;
+    height: 32px;
+    padding: 0 8px 0 4px;
     line-height: 1;
     cursor: pointer;
-    border-radius: 9px;
+    border-radius: 10px;
     transition: background-color 0.2s ease;
 
     &:hover {
@@ -113,8 +115,14 @@ $prefix-cls: #{$namespace}-user-info;
     }
   }
 
-  &__avatar {
-    box-shadow: 0 0 0 1px var(--app-border-color);
+  &__avatar-ring {
+    display: inline-flex;
+    flex-shrink: 0;
+    padding: 2px;
+    line-height: 0;
+    background-image: var(--app-brand-gradient);
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(var(--el-color-primary-rgb), 0.28);
   }
 
   &__name {

@@ -88,6 +88,7 @@ export default defineComponent({
               <Message color="var(--top-header-text-color)"></Message>
             </div>
           ) : undefined}
+          <div class="header-divider"></div>
           <UserInfo></UserInfo>
         </div>
       </div>
@@ -107,13 +108,15 @@ $prefix-cls: #{$namespace}-tool-header;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    min-width: 34px;
-    height: 34px;
-    padding: 0 7px;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 6px;
     line-height: 1;
     cursor: pointer;
-    border-radius: 9px;
-    transition: background-color 0.2s ease;
+    border-radius: 10px;
+    transition:
+      background-color 0.2s ease,
+      transform 0.15s ease;
 
     // 统一内部元素的垂直居中，避免图标按基线对齐而出现高低差
     > * {
@@ -136,6 +139,19 @@ $prefix-cls: #{$namespace}-tool-header;
     &:hover {
       background-color: var(--top-header-hover-color);
     }
+
+    &:active {
+      transform: scale(0.92);
+    }
+  }
+
+  .header-divider {
+    flex-shrink: 0;
+    width: 1px;
+    height: 16px;
+    margin: 0 8px 0 5px;
+    background-color: var(--top-header-text-color);
+    opacity: 0.16;
   }
 
   .header-action--search {

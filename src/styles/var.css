@@ -3,6 +3,7 @@
   --app-brand-color: var(--el-color-primary);
   --app-brand-color-dark: var(--el-color-primary-dark-2);
   --app-brand-color-soft: var(--el-color-primary-light-9);
+  --app-brand-gradient: linear-gradient(135deg, var(--el-color-primary) 0%, #8b5cf6 100%);
   --app-bg-color: #f5f6fa;
   --app-card-bg-color: #ffffff;
   --app-border-color: #eceef4;
